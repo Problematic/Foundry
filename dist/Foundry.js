@@ -40,22 +40,18 @@ var Foundry = (function () {
 
         for (var i = 0; i < options.properties.length; i++) {
             var prop = options.properties[i];
-
-            if (typeof prop === 'object') {
-                var obj = prop;
-                prop = obj.name;
-
-                var validators = obj.validators || [];
-                __validators[prop] = validators;
-
-                var transformers = obj.transformers || [];
-                __transformers[prop] = transformers;
+            if (typeof prop === 'string') {
+                prop = { name: prop };
             }
+            var name = prop.name;
 
-            __validators[prop] = __validators[prop] || [];
-            __transformers[prop] = __transformers[prop] || [];
-            Constructor.prototype[prop] = getterSetter(prop);
-            Constructor.prototype[prop].hash = null;
+            Constructor.prototype[name] = getterSetter(name);
+            Constructor.prototype[name].hash = null;
+
+            __validators[name] = prop.validators || [];
+            __transformers[name] = prop.transformers || [];
+            Constructor.prototype[name].validators = __validators[name];
+            Constructor.prototype[name].transformers = __transformers[name];
         }
 
         Constructor.prototype.__values = __values;
