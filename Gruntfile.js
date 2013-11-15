@@ -9,6 +9,21 @@ module.exports = function (grunt) {
                 src: ['build/intro.js', 'src/Foundry.js', 'build/outro.js'],
                 dest: 'dist/Foundry.js'
             }
+        },
+        jshint: {
+            src: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+            dist: ['dist/Foundry.js']
+        },
+        karma: {
+            options: {
+                configFile: 'karma.conf.js'
+            },
+            ci: {
+                singleRun: true,
+                browsers: ['PhantomJS']
+            }
         }
     });
+
+    grunt.registerTask('default', ['jshint:src', 'karma:ci', 'concat:dist', 'jshint:dist']);
 };
