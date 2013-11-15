@@ -53,6 +53,8 @@ var Foundry = (function () {
             __transformers[prop] = __transformers[prop] || [];
             Constructor.prototype[prop] = getterSetter(prop);
             Constructor.prototype[prop].hash = null;
+            Constructor.prototype[prop].validators = __validators[prop];
+            Constructor.prototype[prop].transformers = __transformers[prop];
         }
 
         Constructor.prototype.__values = __values;

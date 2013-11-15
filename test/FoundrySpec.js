@@ -50,6 +50,54 @@ describe('Foundry', function () {
     });
 
     describe('instantiated object', function () {
+        describe('getter/setter methods', function () {
+            it('should make transformer, validator, and hash information available', function () {
+                var C = Foundry.create({
+                    properties: [
+                        {
+                            name: 'foo',
+                            validators: [function (value) {
+                                return value !== undefined;
+                            }],
+                            transformers: [function (value) {
+                                return value.toString();
+                            }]
+                        }
+                    ]
+                });
+
+                var c = new C({});
+
+                expect(c.foo).toBeDefined();
+                expect(c.foo.hash).toBeDefined();
+                expect(c.foo.validators).toBeDefined();
+                expect(c.foo.validators.length).toBe(1);
+                expect(c.foo.transformers).toBeDefined();
+                expect(c.foo.transformers.length).toBe(1);
+            });
+
+            it('should reference transformers and validators from instance object', function () {
+                var C = Foundry.create({
+                    properties: [
+                        {
+                            name: 'foo',
+                            validators: [function (value) {
+                                return value;
+                            }]
+                        }
+                    ]
+                });
+
+                var c = new C({});
+
+                expect(c.foo.validators.length).toBe(1);
+                expect(c.foo.validators[0]).toBe(c.__validators.foo[0]);
+
+                c.__validators.foo.pop();
+                expect(c.foo.validators.length).toBe(0);
+            });
+        });
+
         it('should honor validators', function () {
             var C = Foundry.create({
                 properties: [
