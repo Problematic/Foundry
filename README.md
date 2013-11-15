@@ -77,6 +77,9 @@ item.name('a name');
 item.name.hash; // 1384545009541
 ```
 
+#### instance.\<manipulator\>.hashFn
+A custom hash function for this manipulator defaults to timestamp.
+
 #### instance.\<manipulator\>.validators
 An array of validator functions. This is sugar for `item.__validators[property]`.
 

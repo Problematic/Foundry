@@ -29,7 +29,13 @@ var Foundry = (function () {
                         }
                     }
                     this.__values[prop] = value;
-                    this[prop].hash = +(new Date());
+
+                    if (this[prop].hashFn) {
+                        this[prop].hash = this[prop].hashFn(value);
+                    } else {
+                        this[prop].hash = +(new Date());
+                    }
+
                 }
 
                 return this.__values[prop];
@@ -52,6 +58,8 @@ var Foundry = (function () {
             __transformers[name] = prop.transformers || [];
             Constructor.prototype[name].validators = __validators[name];
             Constructor.prototype[name].transformers = __transformers[name];
+
+            Constructor.prototype[name].hashFn = prop.hashFn;
         }
 
         Constructor.prototype.__values = __values;
