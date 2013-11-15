@@ -140,5 +140,22 @@ describe('Foundry', function () {
             c.foo(5);
             expect(c.foo()).toBe(10);
         });
+
+        it('should honor hash functions provided', function () {
+            var C = Foundry.create({
+                properties: [
+                    {
+                        name: 'foo',
+                        hashFn: function(value){
+                            return value * 2;
+                        }
+                    }
+                ]
+            });
+
+            var c = new C({});
+            c.foo(5);
+            expect(c.foo.hash).toBe(10);
+        });
     });
 });
