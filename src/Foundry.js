@@ -1,4 +1,6 @@
 var Foundry = (function () {
+    "use strict";
+
     function Foundry () {}
 
     Foundry.create = function (options) {
