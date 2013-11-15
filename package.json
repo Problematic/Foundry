@@ -1,0 +1,27 @@
+{
+  "name": "Foundry",
+  "version": "0.1.0",
+  "description": "Lightweight, Angular-friendly DAO factory",
+  "main": "karma.conf.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Problematic/Foundry.git"
+  },
+  "author": "Derek Stobbe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Problematic/Foundry/issues"
+  },
+  "homepage": "https://github.com/Problematic/Foundry",
+  "devDependencies": {
+    "grunt-contrib-concat": "~0.3.0",
+    "load-grunt-tasks": "~0.2.0",
+    "grunt-contrib-jshint": "~0.7.1"
+  }
+}

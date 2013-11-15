@@ -1,3 +1,6 @@
+(function () {
+    "use strict";
+
 var Foundry = (function () {
     function Foundry () {}
 
@@ -71,4 +74,8 @@ var Foundry = (function () {
     };
 
     return Foundry;
+}());
+
+    var global = window || global;
+    global.Foundry = Foundry;
 }());
