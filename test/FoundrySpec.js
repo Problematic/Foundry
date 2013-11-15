@@ -17,12 +17,6 @@ describe('Foundry', function () {
                 properties: [
                     {
                         name: 'foo'
-                    },
-                    {
-                        name: 'bar',
-                        validator: function (value) {
-                            return typeof value === 'number' ? true : "Value '" + value + "' is not a number";
-                        }
                     }
                 ]
             });
@@ -31,12 +25,6 @@ describe('Foundry', function () {
                 foo: 'hello'
             });
             expect(c.foo()).toBe('hello');
-
-            expect(function () {
-                var c = new C({
-                    bar: 'woo!'
-                });
-            }).toThrow(new C.ValidationError("Value 'woo!' is not a number"));
         });
     });
 
@@ -58,6 +46,51 @@ describe('Foundry', function () {
             c.foo('goodbye');
             expect(c.foo()).toBe('goodbye');
             expect(c.foo.hash).not.toBe(null);
+        });
+    });
+
+    describe('instantiated object', function () {
+        it('should honor validators', function () {
+            var C = Foundry.create({
+                properties: [
+                    {
+                        name: 'foo'
+                    },
+                    {
+                        name: 'bar',
+                        validators: [function (value) {
+                            return typeof value === 'number' ? true : "Value '" + value + "' is not a number";
+                        }]
+                    }
+                ]
+            });
+
+            var c = new C({});
+
+            expect(function () {
+                c.bar('woo!');
+            }).toThrow(new C.ValidationError("Value 'woo!' is not a number"));
+
+            c.bar(5);
+            expect(c.bar()).toBe(5);
+        });
+
+        it('should use transformers to manipulate setter values', function () {
+            var C = Foundry.create({
+                properties: [
+                    {
+                        name: 'foo',
+                        transformers: [function (value) {
+                            return value * 2;
+                        }]
+                    }
+                ]
+            });
+
+            var c = new C({});
+
+            c.foo(5);
+            expect(c.foo()).toBe(10);
         });
     });
 });
