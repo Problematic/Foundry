@@ -22,8 +22,15 @@ module.exports = function (grunt) {
                 singleRun: true,
                 browsers: ['PhantomJS']
             }
+        },
+        uglify: {
+            dist: {
+                files: {
+                    'dist/Foundry.min.js': ['dist/Foundry.js']
+                }
+            }
         }
     });
 
-    grunt.registerTask('default', ['jshint:src', 'karma:ci', 'concat:dist', 'jshint:dist']);
+    grunt.registerTask('default', ['jshint:src', 'karma:ci', 'concat:dist', 'uglify:dist', 'jshint:dist']);
 };
